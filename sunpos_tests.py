@@ -1,5 +1,6 @@
-from "sunpos-2" import *
+from sunpos_2 import *
 
-lat = -11.953349
-lon = -76.992187
+lat = 52.521152
+lon = 13.673593
 
+print (sun_position(2017, 03, 24, hour=6, minute=56, sec=0, lat=lat, longitude=lon))

@@ -21,20 +21,20 @@
 # Samples site:
 #    - http://www.findlatitudeandlongitude.com/
 # E.g. These are equivalent - for Lisbon in Portugal.
-#   Latitude:N 38° 43' 26.7257"
-#   Longitude:W 9° 8' 26.25"
-#   Latitude:N 38° 43.445428'
-#   Longitude:W 9° 8.4375'
-#   Latitude:38.72409°
-#   Longitude:-9.140625°
+#   Latitude:N 38Â° 43' 26.7257"
+#   Longitude:W 9Â° 8' 26.25"
+#   Latitude:N 38Â° 43.445428'
+#   Longitude:W 9Â° 8.4375'
+#   Latitude:38.72409Â°
+#   Longitude:-9.140625Â°
 #
 # for Lima Peru
-#   Latitude:S 11° 57' 12.0578"
-#   Longitude:W 76° 59' 31.875"
-#   Latitude:S 11° 57.200964'
-#   Longitude:W 76° 59.53125'
-#   Latitude:-11.953349°
-#   Longitude:-76.992187°
+#   Latitude:S 11Â° 57' 12.0578"
+#   Longitude:W 76Â° 59' 31.875"
+#   Latitude:S 11Â° 57.200964'
+#   Longitude:W 76Â° 59.53125'
+#   Latitude:-11.953349Â°
+#   Longitude:-76.992187Â°
 
 
 import math, re
@@ -78,7 +78,7 @@ def latlong_float_conversion(latitude, longitude):
     lat_s = present_seconds(lat_s)
     lon_s = present_seconds(lon_s)
     #
-    res = "%d°%d'%s%s %d°%d'%s%s" % (lat_d, lat_m, lat_s, lat, lon_d, lon_m, lon_s, lon)
+    res = "%dÂ°%d'%s%s %dÂ°%d'%s%s" % (lat_d, lat_m, lat_s, lat, lon_d, lon_m, lon_s, lon)
     return res
 
 def parse_digits(value):
@@ -291,13 +291,13 @@ if __name__ == '__main__':
         print lat, lon, "=", latlong_float_conversion(lat, lon)
     #
     print "\nTesting string parsing"
-    latlong = ["38°43'26.724N 9°8'26.25W",
-               "33°7'30S 33°7'30W",
-               "38° 43' 26.724 N 9° 8' 26.25 W",
-               "33° 7' 30 S 33°7W",
-               "11° 57' 12.0578S  76° 59' 31.875 W",
-               "11° 57.200964S  76° 59.53125W",
-               "38.72409°N 9.140625°W"
+    latlong = ["38Â°43'26.724N 9Â°8'26.25W",
+               "33Â°7'30S 33Â°7'30W",
+               "38Â° 43' 26.724 N 9Â° 8' 26.25 W",
+               "33Â° 7' 30 S 33Â°7W",
+               "11Â° 57' 12.0578S  76Â° 59' 31.875 W",
+               "11Â° 57.200964S  76Â° 59.53125W",
+               "38.72409Â°N 9.140625Â°W"
                ]
     for s in latlong:
         print s

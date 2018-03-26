@@ -87,3 +87,31 @@ func elevationRadians(lat: Double, dec: Double, ha: Double) -> Bool {
 func solarAzimuthRadiansCharlie(lat: Double, dec: Double, ha: Double) -> Bool {
     
 }
+
+func sun_position(year: int, month: int, day: int, hour: int = 12, minute: int = 0, second: int = 0, latitude: double = 46.5, longitude = 6.5) -> (Double, Double) {
+    
+    let time = calc_time(year, month, day, hour, minute, second)
+    let hour_ = hour + Double(minute) / 60.0 + Double(second) / 3600.0
+    // Ecliptic coordinates
+    let mnlong = meanLongitudeDegrees(time)
+    let mnanom = meanAnomalyRadians(time)
+    let eclong = eclipticLongitudeRadians(mnlong, mnanom)
+    let oblqec = eclipticObliquityRadians(time)
+    // Celestial coordinates
+    let ra = rightAscensionRadians(oblqec, eclong)
+    let dec = rightDeclinationRadians(oblqec, eclong)
+    // Local coordinates
+    let gmst = greenwichMeanSiderealTimeHours(time, hour)
+    let lmst = localMeanSiderealTimeRadians(gmst, longitude)
+    // Hour angle
+    let ha = hourAngleRadians(lmst, ra)
+    // Latitude to radians
+    latitude = // TO-DO
+    // Azimuth and elevation
+    let el = elevationRadians(latitude, dec, ha)
+    let azC = solarAzimuthRadiansCharlie(latitude, dec, ha)
+    
+    let elevation = // TO-DO
+    let azimuth = // TO-DO
+    return (azimuth, elevation)
+}

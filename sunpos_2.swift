@@ -33,7 +33,7 @@ func calc_time(year: int, month: int, day: int, hour: int = 12, minute: int = 0,
     if leapdays { day += 1 }
     
     // Get Julian date - 2400000
-    let hour_: double = Double(hour) + Double(minute) / 60.0 + Double(second) / 3600.0 // hour plus fraction2400000
+    let hour_: Double = Double(hour) + Double(minute) / 60.0 + Double(second) / 3600.0 // hour plus fraction2400000
     let delta = year - 1949
     // TO-DO: double backslash??
     let leap = delta // 4 // former leapyears
@@ -44,4 +44,46 @@ func calc_time(year: int, month: int, day: int, hour: int = 12, minute: int = 0,
     return time
 }
 
-func 
+func meanLongitudeDegrees(time: Double) -> Double {
+    return (280.460 + 0.9856474 * time) % 360)
+}
+
+func meanAnomalyRadians(time: Double) -> Double {
+    // TO-DO: translate...math radians stuff
+}
+
+func eclipticLongitudeRadians(mnlong: Double, mnanomaly: Double) -> Double {
+    
+}
+
+func eclipticObliquityRadians(time: Double) -> Double {
+    
+}
+
+func rightAscensionRadians(oblqec: Double, eclong: Double) -> Double {
+    
+}
+
+func rightDeclinationRadians(oblqec: Double, eclong: Double) -> Double {
+    
+}
+
+func greenwichMeanSiderealTimeHours(time: Double, hour: Double) -> Double {
+    
+}
+
+func localMeanSiderealTimeRadians(gmst: Double, longitude: Double) -> Double {
+    
+}
+
+func hourAngleRadians(lmst: Double, ra: Double) -> Double {
+    
+}
+
+func elevationRadians(lat: Double, dec: Double, ha: Double) -> Bool {
+    
+}
+
+func solarAzimuthRadiansCharlie(lat: Double, dec: Double, ha: Double) -> Bool {
+    
+}

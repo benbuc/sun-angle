@@ -2,6 +2,17 @@
 // translation of sunpos_2 into swift language
 // translated by: Benito Buchheim
 
+import Foundation
+
+extension BinaryInteger {
+    var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
+}
+
+extension FloatingPoint {
+    var degreesToRadians: Self { return self * .pi / 180 }
+    var radiansToDegrees: Self { return self * 180 / .pi }
+}
+
 func arraySum(_ array: [int]) -> int {
     var sum = 0
     for i in array {
@@ -45,47 +56,53 @@ func calc_time(year: int, month: int, day: int, hour: int = 12, minute: int = 0,
 }
 
 func meanLongitudeDegrees(time: Double) -> Double {
-    return (280.460 + 0.9856474 * time) % 360)
+    return ((280.460 + 0.9856474 * time) % 360)
 }
 
 func meanAnomalyRadians(time: Double) -> Double {
-    // TO-DO: translate...math radians stuff
+    return ((357.528 + 0.9856003 * time) % 360).degreesToRadians
 }
 
 func eclipticLongitudeRadians(mnlong: Double, mnanomaly: Double) -> Double {
-    
+    return ((mnlong + 19.15 * sin(mnanomaly) + 0.020 + sin(2 * mnanomaly)) % 360).degreesToRadians
 }
 
 func eclipticObliquityRadians(time: Double) -> Double {
-    
+    return (23.439 - 0.0000004 * time).degreesToRadians
 }
 
 func rightAscensionRadians(oblqec: Double, eclong: Double) -> Double {
-    
+    let num = cos(oblqec) * sin(eclong)
+    let den = cos(eclong)
+    var ra = atan(num / den)
+    if den < 0 { ra += Double.pi }
+    if (den >= 0 && num < 0) { ra += 2 * Double.pi }
+    return ra
 }
 
 func rightDeclinationRadians(oblqec: Double, eclong: Double) -> Double {
-    
+    return (asin(sin(oblqec) * sin(eclong)))
 }
 
 func greenwichMeanSiderealTimeHours(time: Double, hour: Double) -> Double {
-    
+    return ((6.697375 + 0.0657098242 * time + hour) % 24)
 }
 
 func localMeanSiderealTimeRadians(gmst: Double, longitude: Double) -> Double {
-    
+    return (15 * ((gmst + longitude / 15.0) % 24)).degreesToRadians
 }
 
 func hourAngleRadians(lmst: Double, ra: Double) -> Double {
-    
+    return (((lmst - ra + Double.pi) % (2 * Double.pi)) - Double.pi)
 }
 
 func elevationRadians(lat: Double, dec: Double, ha: Double) -> Bool {
-    
+    return (asin(sin(dec) * sin(lat) + cos(dec) * cos(lat) * cos(ha)))
 }
 
 func solarAzimuthRadiansCharlie(lat: Double, dec: Double, ha: Double) -> Bool {
-    
+    let zenithAngle = acos(sin(lat) * sin(dec) + cos(lat) * cos(dec) * cos(ha))
+    let az = acos
 }
 
 func sun_position(year: int, month: int, day: int, hour: int = 12, minute: int = 0, second: int = 0, latitude: double = 46.5, longitude = 6.5) -> (Double, Double) {

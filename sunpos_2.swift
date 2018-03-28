@@ -1,6 +1,43 @@
 // sunpos_2.swift
 // translated from python by Benito Buchheim
-// see sunpos_2.py for more information
+
+// header of sunpos_2.py:
+/*
+# Taken from the code on stackexchange here:
+# - http://stackoverflow.com/questions/8708048/position-of-the-sun-given-time-of-day-latitude-and-longitude
+# converted into Python and extensively tested.
+
+# It is critical to note the following:
+# Latitude is defined as +-90 degrees where 0 is the equator and +90 is the North Pole.
+# Longitude is +- 180 degrees about the GMT line, but has two representations:
+#  - Either a map based mode where +ve values lie to the East,
+#  - or a satellite based mode where +ve refers to the West.
+# The NOAA site - where you can validate this code output - uses the satellite basis.
+#   - http://www.esrl.noaa.gov/gmd/grad/solcalc/azel.html
+# Most maps, and this code, use the Map basis.
+
+#  A latitude or longitude with 8 decimal places pinpoints a location to within 1 millimeter,( 1/16 inch).
+#   Precede South latitudes and West longitudes with a minus sign.
+
+# This can be overcome by entering Lat/Long in the NSEW notation instead of as floating point numbers.
+# Samples site:
+#    - http://www.findlatitudeandlongitude.com/
+# E.g. These are equivalent - for Lisbon in Portugal.
+#   Latitude:N 38° 43' 26.7257"
+#   Longitude:W 9° 8' 26.25"
+#   Latitude:N 38° 43.445428'
+#   Longitude:W 9° 8.4375'
+#   Latitude:38.72409°
+#   Longitude:-9.140625°
+#
+# for Lima Peru
+#   Latitude:S 11° 57' 12.0578"
+#   Longitude:W 76° 59' 31.875"
+#   Latitude:S 11° 57.200964'
+#   Longitude:W 76° 59.53125'
+#   Latitude:-11.953349°
+#   Longitude:-76.992187°
+ */
 
 import Foundation
 
@@ -138,3 +175,4 @@ public func sun_position(year: Int, month: Int, day: Int, hour: Int = 12, minute
     let azimuth = azC.radiansToDegrees
     return (azimuth, elevation)
 }
+

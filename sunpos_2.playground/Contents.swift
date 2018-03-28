@@ -43,10 +43,10 @@ func calc_time(year: Int, month: Int, day: Int, hour: Int = 12, minute: Int = 0,
     }
     
     // Get Julian date - 2400000
-    let totalHour = Double(hour + minute) / 60.0 + Double(second) / 3600.0 // hour plus fraction
+    let totalHour = Double(hour) + Double(minute) / 60.0 + Double(second) / 3600.0 // hour plus fraction
     let delta = year - 1949
     let leap = delta / 4 // former leapyears
-    let jd = 32916.5 + Double(delta) * 365 + Double(leap) + Double(day) + totalHour / 24.0
+    let jd = 32916.5 + Double(delta) * 365 + Double(leap) + Double(dayOfYear) + totalHour / 24.0
     // The input to the Astronomer's almanac is the difference between
     // the Julian date and JD 2451545.0 (noon, 1 January 2000)
     let time = jd - 51545
@@ -141,3 +141,12 @@ func sun_position(year: Int, month: Int, day: Int, hour: Int = 12, minute: Int =
     let azimuth = azC.radiansToDegrees
     return (azimuth, elevation)
 }
+
+let lat = 52.521152
+let lon = 13.673593
+
+let (azimuth, elevation) = sun_position(year: 2018, month: 03, day: 28, hour: 13, minute: 0, second: 0, latitude: lat, longitude: lon)
+
+print(azimuth)
+print(elevation)
+

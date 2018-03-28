@@ -3,8 +3,9 @@
 // translated by: Benito Buchheim
 
 import Foundation
+import UIKit
 
-extension BinaryInteger {
+/*extension BinaryInteger {
     var degreesToRadians: CGFloat { return CGFloat(Int(self)) * .pi / 180 }
 }
 
@@ -13,7 +14,7 @@ extension FloatingPoint {
     var radiansToDegrees: Self { return self * 180 / .pi }
 }
 
-func arraySum(_ array: [int]) -> int {
+func arraySum(_ array: [Int]) -> Int {
     var sum = 0
     for i in array {
         sum += i
@@ -21,7 +22,7 @@ func arraySum(_ array: [int]) -> int {
     return sum
 }
 
-func leapyear(year: int) -> Bool {
+func leapyear(year: Int) -> Bool {
     if year % 400 == 0 {
         return true
     } else if year % 100 == 0 {
@@ -33,13 +34,13 @@ func leapyear(year: int) -> Bool {
     }
 }
 
-func calc_time(year: int, month: int, day: int, hour: int = 12, minute: int = 0, second: int = 0) -> Int {
+func calc_time(year: Int, month: Int, day: Int, hour: Int = 12, minute: Int = 0, second: Int = 0) -> Int {
     // TO-DO: check return type
     
     // Get day of the year, e.g. Feb 1 = 32, Mar 1 = 61 on leapyear
-    let month_days: [int] = [0,31,28,31,30,31,30,31,31,30,31,30]
+    let month_days: [Int] = [0,31,28,31,30,31,30,31,31,30,31,30]
     // TO-DO: get array range
-    let day_ = day + arraySum(month_day)
+    let day_ = day + arraySum(month_days)
     let leapdays = leapyear(year) && day >= 60 && !(month==2 && day==60)
     if leapdays { day += 1 }
     
@@ -105,7 +106,7 @@ func solarAzimuthRadiansCharlie(lat: Double, dec: Double, ha: Double) -> Bool {
     let az = acos
 }
 
-func sun_position(year: int, month: int, day: int, hour: int = 12, minute: int = 0, second: int = 0, latitude: double = 46.5, longitude = 6.5) -> (Double, Double) {
+public func sun_position(year: Int, month: Int, day: Int, hour: Int = 12, minute: Int = 0, second: Int = 0, latitude: Double = 46.5, longitude: Double = 6.5) -> (Double, Double) {
     
     let time = calc_time(year, month, day, hour, minute, second)
     let hour_ = hour + Double(minute) / 60.0 + Double(second) / 3600.0
@@ -123,12 +124,12 @@ func sun_position(year: int, month: int, day: int, hour: int = 12, minute: int =
     // Hour angle
     let ha = hourAngleRadians(lmst, ra)
     // Latitude to radians
-    latitude = // TO-DO
+    latitude = 3 // TO-DO
     // Azimuth and elevation
     let el = elevationRadians(latitude, dec, ha)
     let azC = solarAzimuthRadiansCharlie(latitude, dec, ha)
     
-    let elevation = // TO-DO
-    let azimuth = // TO-DO
+    let elevation = 5 // TO-DO
+    let azimuth = 5 // TO-DO
     return (azimuth, elevation)
-}
+}*/

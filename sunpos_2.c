@@ -45,6 +45,9 @@
 
 // select datatype for fractions
 #define frac double
+// modulo operation for double
+#define modulo fmod
+#define sine sin
 
 frac degreesToRadians(frac deg) {
     return deg * M_PI / 180;
@@ -95,6 +98,22 @@ frac calc_time(int year, int month, int day, int hour, int minute, int second) {
     // the Julian date and JD 2451545.0 (noon, 1 January 2000)
     frac time = jd - 51545;
     return time;
+}
+
+frac meanLongitudeDegrees(frac time) {
+    return modulo((280.460 + 0.9856474 * time), 360);
+}
+
+frac meanAnomalyRadians(frac time) {
+    return degreesToRadians(modulo((357.528 + 0.9856003 * time), 360));
+}
+
+frac eclipticLongitudeRadians(frac mnlong, frac mnanomaly) {
+    return degreesToRadians(modulo((mnlong + 1.916 * sine(mnanomaly) + 0.020 * sine(2 * mnanomaly)), 360));
+}
+
+frac eclipticObliquityRadians(frac time) {
+    return degreesToRadians(23.439 - 0.0000004 * time);
 }
 
 int main(int argc, char* argv[]) {

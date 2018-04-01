@@ -51,6 +51,7 @@
 #define cosine cos
 #define atangent atan
 #define asine asin
+#define acosine acos
 
 frac degreesToRadians(frac deg) {
     return deg * M_PI / 180;
@@ -59,6 +60,11 @@ frac degreesToRadians(frac deg) {
 frac radiansToDegrees(frac rad) {
     return rad * 180 / M_PI;
 }
+
+struct HorizontalCoordinates {
+    frac azimuth;
+    frac elevation;
+};
 
 int arraySumWithCount(int* array, int num) {
     // calculates the sum of the specifiec number of integers
@@ -143,6 +149,54 @@ frac greenwichMeanSiderealTimeHours(frac time, frac hour) {
 
 frac localMeanSiderealTimeRadians(frac gmst, frac longitude) {
     return degreesToRadians(modulo(15 * (gmst + longitude / 15.0), 24));
+}
+
+frac hourAngleRadians(frac lmst, frac ra) {
+    return (modulo(lmst - ra * M_PI, 2*M_PI) - M_PI);
+}
+
+frac elevationRadians(frac lat, frac dec, frac ha) {
+    return asine(sine(dec) * sine(lat) + cosine(dec) * cosine(lat) * cosine(ha));
+}
+
+frac solarAzimuthRadiansCharlie(frac lat, frac dec, frac ha) {
+    frac zenithAngle = acosine(sine(lat) * sine(dec) + cosine(lat) * cosine(dec) * cosine(ha));
+    frac az = acosine((sine(lat) * cosine(zenithAngle) - sine(dec)) / (cosine(lat) * sine(zenithAngle)));
+    if (ha > 0) {
+        az = az + M_PI;
+    } else {
+        az = modulo(3 * M_PI - az, 2 * M_PI); 
+    }
+
+    return az;
+}
+
+struct HorizontalCoordinates sun_position(int year, int month, int day, int hour, int minute, int second, frac latitude, frac longitude) {
+    frac time = calc_time(year, month, day, hour, minute, second);
+    frac hourMinuteSecond = (frac)hour + (frac)minute / 60.0 + (frac)second / 3600.0;
+    // Ecliptic coordinates
+    frac mnlong = meanLongitudeDegrees(time);
+    frac mnanom = meanAnomalyRadians(time);
+    frac eclong = eclipticLongitudeRadians(mnlong, mnanom);
+    frac oblqec = eclipticObliquityRadians(time);
+    // Celestial coordinates
+    frac ra = rightAscensionRadians(oblqec, eclong);
+    frac dec = rightDeclinationRadians(oblqec, eclong);
+    // Local coordinates
+    frac gmst = greenwichMeanSiderealTimeHours(time, hourMinuteSecond);
+    frac lmst = localMeanSiderealTimeRadians(time, longitude);
+    // Hour angle
+    frac ha = hourAngleRadians(lmst, ra);
+    // Latitude to radians
+    frac lat = degreesToRadians(latitude);
+    // Azimuth and elevation
+    frac el = elevationRadians(lat, dec, ha);
+    frac azC = solarAzimuthRadiansCharlie(lat, dec, ha);
+
+    frac elevation = radiansToDegrees(el);
+    frac azimuth = radiansToDegrees(azC);
+    struct HorizontalCoordinates coords = { azimuth, elevation };
+    return coords;
 }
 
 int main(int argc, char* argv[]) {

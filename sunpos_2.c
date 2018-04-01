@@ -48,6 +48,9 @@
 // modulo operation for double
 #define modulo fmod
 #define sine sin
+#define cosine cos
+#define atangent atan
+#define asine asin
 
 frac degreesToRadians(frac deg) {
     return deg * M_PI / 180;
@@ -114,6 +117,32 @@ frac eclipticLongitudeRadians(frac mnlong, frac mnanomaly) {
 
 frac eclipticObliquityRadians(frac time) {
     return degreesToRadians(23.439 - 0.0000004 * time);
+}
+
+frac rightAscensionRadians(frac oblqec, frac eclong) {
+    frac num = cosine(oblqec) * sine(eclong);
+    frac den = cosine(eclong);
+    frac ra = atangent(num / den);
+    if (den < 0) {
+        ra += M_PI;
+    }
+    if (den >= 0 && num < 0) {
+        ra += 2 * M_PI;
+    }
+
+    return ra;
+}
+
+frac rightDeclinationRadians(frac oblqec, frac eclong) {
+    return asine(sine(oblqec) * sine(eclong));
+}
+
+frac greenwichMeanSiderealTimeHours(frac time, frac hour) {
+    return modulo(6.697375 + 0.0657098242 * time + hour, 24);
+}
+
+frac localMeanSiderealTimeRadians(frac gmst, frac longitude) {
+    return degreesToRadians(modulo(15 * (gmst + longitude / 15.0), 24));
 }
 
 int main(int argc, char* argv[]) {

@@ -201,5 +201,9 @@ struct HorizontalCoordinates sun_position(int year, int month, int day, int hour
 
 int main(int argc, char* argv[]) {
 
+    struct HorizontalCoordinates coords = sun_position(2018, 04, 02, 10, 15, 00, 52.521148, 13.673597);
+    printf("Azimuth:    %f\n", coords.azimuth);
+    printf("Elevation:  %f\n", coords.elevation);
+
     return 0;
 }
